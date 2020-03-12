@@ -16,6 +16,10 @@ class GetStarted extends Component {
         const pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return pattern.test(String(value).toLowerCase());
       }
+      case 'name': {
+        const pattern = /^[a-zA-Z]+$/;
+        return pattern.test(value);
+      }
       default: {
         return false;
       }
@@ -24,9 +28,9 @@ class GetStarted extends Component {
 
   handleSubmit = () => {
     const { firstName, lastName, email, password } = this.state;
-    if (!firstName || firstName === '') {
+    if (!firstName || firstName === '' || this.validateInputs('name', firstName) === false) {
       this.setState({ error: true, errorMessage: 'Please enter a valid firstname' });
-    } else if (!lastName || lastName === '') {
+    } else if (!lastName || lastName === '' || this.validateInputs('name', lastName) === false) {
       this.setState({ error: true, errorMessage: 'Please enter a valid lastname' });
     } else if (!email || email === '' || this.validateInputs('email', email) === false) {
       this.setState({ error: true, errorMessage: 'Please enter a valid email' });
